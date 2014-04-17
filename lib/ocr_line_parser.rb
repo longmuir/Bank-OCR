@@ -1,4 +1,5 @@
 require_relative 'account_number'
+require_relative 'character_repair'
 
 class OCRLineParser
  
@@ -9,44 +10,21 @@ class OCRLineParser
     @errors = {}
   end
 
-  #refactor me
   def read_account_number(ocr_line)
     converted_line = convert_line(ocr_line) 
     account_number = AccountNumber.new( converted_line )
-    
+    verify_line_integrity(account_number)
+  end
+
+  def verify_line_integrity(account_number)
     if account_number.contains_illegible?
-      possible_fixes = resolve_all_errors(converted_line)
+      char_repair = CharacterRepair.new(@char_parser)
+      possible_fixes = char_repair.get_possible_fixes(account_number.number, @errors)
       account_number.add_alternates(possible_fixes)
     end
     account_number
   end
 
-  def resolve_all_errors(line_with_errors)
-    @fixed_lines = []
-    resolve_errors(line_with_errors, @errors)
-  end
-
-  #Now for a little recursion... needs refactoring!
-  def resolve_errors(line_with_errors, errors)
-    errors.each_key do |error_key|
-      fixed_chars = @char_parser.find_alternatives(errors[error_key])
-
-      fixed_chars.each do |fixed_char|
-        line_to_fix = line_with_errors.dup
-        line_to_fix[error_key] = fixed_char
-        if line_to_fix.include?("?")
-          errors.delete(error_key)
-          resolve_errors(line_to_fix, errors)
-        else
-          @fixed_lines.push(line_to_fix)
-        end
-      end
-
-    end
-    @fixed_lines
-  end
-  
-  #refactor me
   def convert_line(ocr_line)
     @errors = {}
     ocr_chars = split_ocrline_into_ocrchars(ocr_line)

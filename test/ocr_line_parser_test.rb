@@ -85,9 +85,4 @@ class OCRLineParserTest < Test::Unit::TestCase
     assert_equal(@parser.errors[8], " _ |_| _ ")
   end
 
-  def test_resolve_errors
-    error_line = create_errors_and_convert_line
-    assert_equal(["123456789","123436789"],@parser.resolve_all_errors(error_line))
-  end
-
 end

@@ -1,5 +1,5 @@
 require_relative 'checksum'
-require_relative 'repair'
+require_relative 'checksum_repair'
 
 class AccountNumber
   DIGIT_COUNT = 9
@@ -22,7 +22,7 @@ class AccountNumber
   def validate_number
     #refactor this ugly statement
     if !@number.include?(INVALID_CHAR) && !@checksum.passes?(@number)
-      repair = Repair.new(@checksum)
+      repair = CheckSumRepair.new(@checksum)
       @alternative_numbers = repair.get_possible_fixes(@number)
       check_for_certainty
     end

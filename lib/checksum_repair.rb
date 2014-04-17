@@ -1,4 +1,7 @@
-class Repair
+class CheckSumRepair
+
+  attr_reader :possible_fixes
+
   OCR_ONE_OFF_CANDIDATES = {"0" => ["8"],
                             "1" => ["7"],
                             "2" => [],
@@ -16,19 +19,23 @@ class Repair
   end
  
   def get_possible_fixes(number)
-    possible_fixes = Array.new
+    @possible_fixes = Array.new
     number.chars.each_with_index do |digit, index|
-      alternative_digits = OCR_ONE_OFF_CANDIDATES[digit]
-
-      alternative_digits.each do |candidate_digit|
-        trial_number = number.dup
-        trial_number[index] = candidate_digit
-
-        if @checksum.passes?(trial_number)
-          possible_fixes.push(trial_number) 
-        end
+      OCR_ONE_OFF_CANDIDATES[digit].each do |candidate_digit|
+        add_if_passes(compute_trial_number(number, candidate_digit, index))
       end
     end
-    possible_fixes
+    @possible_fixes
   end
+
+  def compute_trial_number(number, candidate, index)
+    trial_number = number.dup
+    trial_number[index] = candidate
+    trial_number
+  end
+
+  def add_if_passes(trial_number)
+   @possible_fixes.push(trial_number) if @checksum.passes?(trial_number)
+  end
+
 end
