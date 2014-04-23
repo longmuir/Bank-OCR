@@ -1,6 +1,6 @@
 require_relative '../lib/checksum'
 require_relative '../lib/checksum_repair'
-require 'test/unit'
+require "test/unit"
 
 class RepairTest < Test::Unit::TestCase
 

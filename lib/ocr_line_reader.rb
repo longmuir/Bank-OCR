@@ -1,6 +1,7 @@
 require_relative 'ocr_character'
 require_relative 'ocr_line_parser'
 
+#This class doesn't do much - remove!
 class OCRLineReader
 
   attr_reader :number, :ocr_line

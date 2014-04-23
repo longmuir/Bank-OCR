@@ -1,5 +1,5 @@
 require_relative '../lib/ocr_character'
-require 'test/unit'
+require "test/unit"
 
 class OCRCharacterTest < Test::Unit::TestCase
 
@@ -82,30 +82,6 @@ class OCRCharacterTest < Test::Unit::TestCase
             "|_|"+
             " _|"
     assert_equal(nil, @converter.convert_to_char(input))
-  end
-
-  def test_find_alternatives_should_return_9
-    input = "   "+
-            "|_|"+
-            " _|"
-    alternatives = @converter.find_alternatives(input)
-    assert alternatives.include?("4")
-    assert alternatives.include?("9")
-    assert alternatives.size == 2
-  end
-
-  def test_find_alternatives_should_return_1
-    input = "   "+
-            "  |"+
-            "   "
-    assert_equal(["1"], @converter.find_alternatives(input))
-  end
-
-  def test_find_alternatives_should_return_1_again
-    input = "   "+
-            "  |"+
-            " _|"
-    assert_equal(["1"], @converter.find_alternatives(input))
   end
 
 end

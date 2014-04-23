@@ -1,5 +1,5 @@
 require_relative '../lib/ocr_line_reader'
-require 'test/unit'
+require "test/unit"
 
 class OCRLineReaderTest < Test::Unit::TestCase
 

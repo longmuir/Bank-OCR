@@ -29,13 +29,16 @@ class OCRLineParser
     @errors = {}
     ocr_chars = split_ocrline_into_ocrchars(ocr_line)
     ocr_chars.each_with_index.reduce("") do |line_sum, (ocr_char, index)|
-      ocr_conversion = convert_char(ocr_char)
-      if !ocr_conversion 
-        @errors[index] = ocr_char
-        ocr_conversion = AccountNumber::INVALID_CHAR
-      end
-      line_sum + ocr_conversion
+      line_sum + process_char_conversion(ocr_char, index)
     end
+  end
+
+  def process_char_conversion(ocr_char, index)
+    ocr_conversion = convert_char(ocr_char)
+    if !ocr_conversion 
+        @errors[index] = ocr_char
+    end
+    ocr_conversion || AccountNumber::INVALID_CHAR
   end
 
   def convert_char(ocr_char)

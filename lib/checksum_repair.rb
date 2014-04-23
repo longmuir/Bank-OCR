@@ -21,11 +21,15 @@ class CheckSumRepair
   def get_possible_fixes(number)
     @possible_fixes = Array.new
     number.chars.each_with_index do |digit, index|
-      OCR_ONE_OFF_CANDIDATES[digit].each do |candidate_digit|
-        add_if_passes(compute_trial_number(number, candidate_digit, index))
-      end
+      add_fixed_number_if_passes(number, digit, index)
     end
     @possible_fixes
+  end
+
+  def add_fixed_number_if_passes(number, digit, index)
+    OCR_ONE_OFF_CANDIDATES[digit].each do |candidate_digit|
+      add_if_passes(compute_trial_number(number, candidate_digit, index))
+    end
   end
 
   def compute_trial_number(number, candidate, index)

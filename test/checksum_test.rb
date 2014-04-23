@@ -1,6 +1,5 @@
 require_relative '../lib/checksum'
-
-require 'test/unit'
+require "test/unit"
 
 class OCRCheckSumTest < Test::Unit::TestCase
 

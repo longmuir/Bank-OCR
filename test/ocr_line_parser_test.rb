@@ -1,7 +1,6 @@
 require_relative '../lib/ocr_line_parser'
 require_relative '../lib/ocr_character'
-
-require 'test/unit'
+require "test/unit"
 
 class OCRLineParserTest < Test::Unit::TestCase
 

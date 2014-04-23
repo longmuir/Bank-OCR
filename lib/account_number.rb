@@ -20,7 +20,6 @@ class AccountNumber
   end
 
   def validate_number
-    #refactor this ugly statement
     if !@number.include?(INVALID_CHAR) && !@checksum.passes?(@number)
       repair = CheckSumRepair.new(@checksum)
       @alternative_numbers = repair.get_possible_fixes(@number)
