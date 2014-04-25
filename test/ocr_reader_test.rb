@@ -1,10 +1,10 @@
-require_relative '../lib/ocr_line_reader'
+require_relative '../lib/ocr_reader'
 require "test/unit"
 
 class OCRLineReaderTest < Test::Unit::TestCase
 
   def setup 
-    @reader = OCRLineReader.new
+    @reader = OCRReader.new
   end
 
   def test_reads_123456789

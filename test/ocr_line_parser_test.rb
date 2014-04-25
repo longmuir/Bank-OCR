@@ -70,18 +70,4 @@ class OCRLineParserTest < Test::Unit::TestCase
                  "|_ ", @parser.get_ocrchar_at_index(sub_lines,3))
   end
 
-  def create_errors_and_convert_line
-    input = "    _  _     _  _  _  _  _ \n"+ 
-            "  | _| _||_| _ |_   ||_||_|\n"+
-            "  ||_  _|  | _||_|  ||_| _ \n"
-    @parser.convert_line(input)
-  end
-
-  def test_convert_1234Errors_should_provide_errors
-    assert_equal("1234?678?", create_errors_and_convert_line)
-    assert_equal(2, @parser.errors.size)
-    assert_equal(@parser.errors[4], " _  _  _|")
-    assert_equal(@parser.errors[8], " _ |_| _ ")
-  end
-
 end

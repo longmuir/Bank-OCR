@@ -1,6 +1,6 @@
 require_relative 'account_number'
-require_relative 'character_repair'
 
+#Could extract the AccountNumber as a dependency.
 class OCRLineParser
  
   attr_reader :number, :errors
@@ -12,17 +12,8 @@ class OCRLineParser
 
   def read_account_number(ocr_line)
     converted_line = convert_line(ocr_line) 
-    account_number = AccountNumber.new( converted_line )
-    verify_line_integrity(account_number)
-  end
-
-  def verify_line_integrity(account_number)
-    if account_number.contains_illegible?
-      char_repair = CharacterRepair.new(@char_parser)
-      possible_fixes = char_repair.get_possible_fixes(account_number.number, @errors)
-      account_number.add_alternates(possible_fixes)
-    end
-    account_number
+    AccountNumber.new( converted_line )
+    #verify_line_integrity(account_number)
   end
 
   def convert_line(ocr_line)
